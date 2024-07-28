@@ -30,7 +30,8 @@ public class EventManagementSystem {
             System.out.println("2. View Events");
             System.out.println("3. Delete Event");
             System.out.println("4. Search Event");
-            System.out.println("5. Exit");
+            System.out.println("5. Update Event");
+            System.out.println("6. Exit");
             System.out.print("Choose an option: ");
             int choice = getValidChoice();
 
@@ -48,6 +49,9 @@ public class EventManagementSystem {
                     searchEvent();
                     break;
                 case 5:
+                    updateEvent();
+                    break;
+                case 6:
                     System.exit(0);
                 default:
                     System.out.println("Invalid choice, please try again.");
@@ -57,18 +61,18 @@ public class EventManagementSystem {
 
     private static int getValidChoice() {
         int choice = -1;
-        while (choice < 1 || choice > 5) {
+        while (choice < 1 || choice > 6) {
             try {
                 choice = scanner.nextInt();
-                if (choice < 1 || choice > 5) {
-                    System.out.print("Invalid choice. Please choose a number between 1 and 5: ");
+                if (choice < 1 || choice > 6) {
+                    System.out.print("Invalid choice. Please choose a number between 1 and 6: ");
                 }
             } catch (InputMismatchException e) {
                 System.out.print("Invalid input. Please enter a number: ");
-                scanner.next(); // Consume invalid input
+                scanner.next();
             }
         }
-        scanner.nextLine(); // Consume newline
+        scanner.nextLine();
         return choice;
     }
 
@@ -126,6 +130,32 @@ public class EventManagementSystem {
         for (Event event : events) {
             if (event.title.equalsIgnoreCase(title)) {
                 System.out.println(event);
+                return;
+            }
+        }
+
+        System.out.println("Event not found.\n");
+    }
+
+    private static void updateEvent() {
+        System.out.print("Enter the title of the event to update: ");
+        String title = scanner.nextLine();
+
+        for (Event event : events) {
+            if (event.title.equalsIgnoreCase(title)) {
+                System.out.print("Enter new event date (YYYY-MM-DD): ");
+                String newDate = scanner.nextLine();
+                System.out.print("Enter new event description: ");
+                String newDescription = scanner.nextLine();
+
+                if (!newDate.isEmpty()) {
+                    event.date = newDate;
+                }
+                if (!newDescription.isEmpty()) {
+                    event.description = newDescription;
+                }
+
+                System.out.println("Event updated successfully!\n");
                 return;
             }
         }
