@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -31,7 +33,8 @@ public class EventManagementSystem {
             System.out.println("3. Delete Event");
             System.out.println("4. Search Event");
             System.out.println("5. Update Event");
-            System.out.println("6. Exit");
+            System.out.println("6. Sort Events by Date");
+            System.out.println("7. Exit");
             System.out.print("Choose an option: ");
             int choice = getValidChoice();
 
@@ -52,6 +55,9 @@ public class EventManagementSystem {
                     updateEvent();
                     break;
                 case 6:
+                    sortEventsByDate();
+                    break;
+                case 7:
                     System.exit(0);
                 default:
                     System.out.println("Invalid choice, please try again.");
@@ -61,18 +67,18 @@ public class EventManagementSystem {
 
     private static int getValidChoice() {
         int choice = -1;
-        while (choice < 1 || choice > 6) {
+        while (choice < 1 || choice > 7) {
             try {
                 choice = scanner.nextInt();
-                if (choice < 1 || choice > 6) {
-                    System.out.print("Invalid choice. Please choose a number between 1 and 6: ");
+                if (choice < 1 || choice > 7) {
+                    System.out.print("Invalid choice. Please choose a number between 1 and 7: ");
                 }
             } catch (InputMismatchException e) {
                 System.out.print("Invalid input. Please enter a number: ");
-                scanner.next();
+                scanner.next(); // Consume invalid input
             }
         }
-        scanner.nextLine();
+        scanner.nextLine(); // Consume newline
         return choice;
     }
 
@@ -161,5 +167,20 @@ public class EventManagementSystem {
         }
 
         System.out.println("Event not found.\n");
+    }
+
+    private static void sortEventsByDate() {
+        if (events.isEmpty()) {
+            System.out.println("No events available to sort.\n");
+        } else {
+            Collections.sort(events, new Comparator<Event>() {
+                @Override
+                public int compare(Event e1, Event e2) {
+                    return e1.date.compareTo(e2.date);
+                }
+            });
+            System.out.println("Events sorted by date successfully!\n");
+            viewEvents();
+        }
     }
 }
