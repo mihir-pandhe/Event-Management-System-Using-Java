@@ -27,10 +27,11 @@ public class EventManagementSystem {
             System.out.println("1. Add Event");
             System.out.println("2. View Events");
             System.out.println("3. Delete Event");
-            System.out.println("4. Exit");
+            System.out.println("4. Search Event");
+            System.out.println("5. Exit");
             System.out.print("Choose an option: ");
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
@@ -43,6 +44,9 @@ public class EventManagementSystem {
                     deleteEvent();
                     break;
                 case 4:
+                    searchEvent();
+                    break;
+                case 5:
                     System.exit(0);
                 default:
                     System.out.println("Invalid choice, please try again.");
@@ -91,5 +95,19 @@ public class EventManagementSystem {
         } else {
             System.out.println("Event not found.\n");
         }
+    }
+
+    private static void searchEvent() {
+        System.out.print("Enter the title of the event to search: ");
+        String title = scanner.nextLine();
+
+        for (Event event : events) {
+            if (event.title.equalsIgnoreCase(title)) {
+                System.out.println(event);
+                return;
+            }
+        }
+
+        System.out.println("Event not found.\n");
     }
 }
