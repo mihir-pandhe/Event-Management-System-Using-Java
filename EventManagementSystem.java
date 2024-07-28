@@ -26,7 +26,8 @@ public class EventManagementSystem {
         while (true) {
             System.out.println("1. Add Event");
             System.out.println("2. View Events");
-            System.out.println("3. Exit");
+            System.out.println("3. Delete Event");
+            System.out.println("4. Exit");
             System.out.print("Choose an option: ");
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
@@ -39,6 +40,9 @@ public class EventManagementSystem {
                     viewEvents();
                     break;
                 case 3:
+                    deleteEvent();
+                    break;
+                case 4:
                     System.exit(0);
                 default:
                     System.out.println("Invalid choice, please try again.");
@@ -66,6 +70,26 @@ public class EventManagementSystem {
             for (Event event : events) {
                 System.out.println(event);
             }
+        }
+    }
+
+    private static void deleteEvent() {
+        System.out.print("Enter the title of the event to delete: ");
+        String title = scanner.nextLine();
+
+        Event eventToRemove = null;
+        for (Event event : events) {
+            if (event.title.equalsIgnoreCase(title)) {
+                eventToRemove = event;
+                break;
+            }
+        }
+
+        if (eventToRemove != null) {
+            events.remove(eventToRemove);
+            System.out.println("Event deleted successfully!\n");
+        } else {
+            System.out.println("Event not found.\n");
         }
     }
 }
